@@ -32,7 +32,7 @@ public class DataTableManager
         }
     }
     
-    public CharacterTableRows.Row GetTestData(int id)
+    public CharacterTableRows.Row GetCharacterData(int id)
     {
         if (CharacterTable.ContainsKey(id))
         {
