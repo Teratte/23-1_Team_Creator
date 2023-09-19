@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using Unity.VisualScripting;
 using UnityEngine;
 
 #if UNITY_EDITOR
@@ -25,9 +26,11 @@ public class DataTableManager
     
     private void LoadAndBuildTable()
     {
+        CharacterTable = new FlexibleDictionary<int, CharacterTableRows.Row>();
         CharacterTableRows table = Resources.Load("DataTable/CharacterTable", typeof(CharacterTableRows)) as CharacterTableRows;
         foreach (var row in table.rows)
         {
+            Debug.Log(row.id);
             CharacterTable.Add(row.id, row);
         }
     }
@@ -48,8 +51,10 @@ public class DataTableManager
         tmpData.characterid = 1;
         tmpData.sentence = "이것은 임시 텍스트입니다. 입력된 ID는 " + id + "입니다.";
         tmpData.branch = new BranchInfo[2];
+        tmpData.branch[0] = new BranchInfo();
         tmpData.branch[0].answer = "ID 2번 호출";
         tmpData.branch[0].next_sentence_id = 2;
+        tmpData.branch[1] = new BranchInfo();
         tmpData.branch[1].answer = "ID 3번 호출";
         tmpData.branch[1].next_sentence_id = 3;
         return tmpData;

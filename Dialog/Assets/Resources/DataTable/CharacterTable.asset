@@ -16,6 +16,6 @@ MonoBehaviour:
   - id: 1
     name: Bono
     characterimage: {fileID: 21300000, guid: 56b3b0eb62e6f4fa293cbdd124338c79, type: 3}
-  - id: 1
+  - id: 2
     name: OnoB
     characterimage: {fileID: 21300000, guid: 9ab24c66e26cb44de8a80f10f7c50919, type: 3}
