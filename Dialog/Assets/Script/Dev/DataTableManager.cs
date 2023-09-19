@@ -21,18 +21,38 @@ public class DataTableManager
     }
     /***/
     
-    public Dictionary<int, TestDataRows.Row> TestTable;
+    public Dictionary<int, CharacterTableRows.Row> CharacterTable;
     
     private void LoadAndBuildTable()
     {
-        // TODO: Getter에서 로드하지 말고, 여기서 로드를 미리 하고 Dictionary에 id와 커플링 해서 데이터를 넣어놓는다.
-        // 그러면 index가 아니라 id로 row를 찾을 수 있게 된다.
+        CharacterTableRows table = Resources.Load("DataTable/CharacterTable", typeof(CharacterTableRows)) as CharacterTableRows;
+        foreach (var row in table.rows)
+        {
+            CharacterTable.Add(row.id, row);
+        }
     }
     
-    public TestDataRows.Row GetTestData(int id)
+    public CharacterTableRows.Row GetTestData(int id)
     {
-        TestDataRows table = Resources.Load("DataTable/TestDataTable", typeof(TestDataRows)) as TestDataRows;
-        return table.rows[id];
+        if (CharacterTable.ContainsKey(id))
+        {
+            return CharacterTable[id];
+        }
+        return null;
+    }
+    
+    public SentenceTableRows.Row GetSentenceData(int id)
+    {
+        SentenceTableRows.Row tmpData = new SentenceTableRows.Row();
+        tmpData.id = id;
+        tmpData.characterid = 1;
+        tmpData.sentence = "이것은 임시 텍스트입니다. 입력된 ID는 " + id + "입니다.";
+        tmpData.branch = new BranchInfo[2];
+        tmpData.branch[0].answer = "ID 2번 호출";
+        tmpData.branch[0].next_sentence_id = 2;
+        tmpData.branch[1].answer = "ID 3번 호출";
+        tmpData.branch[1].next_sentence_id = 3;
+        return tmpData;
     }
 }
 
@@ -46,24 +66,21 @@ public class CSVImportPostprocessor : AssetPostprocessor
             // TODO: 테이블 개수 늘어나면 여기 중복코드 늘어날 것 같은데. 함수나 매크로로 묶어보자.
             // 파라미터는 테이블 이름, 클래스 두개면 될 듯
             // 테이블 네이밍 규칙을 만드는게 편할것이다.
-            if (str.IndexOf("/TestDataTable.csv") != -1)
+            if (str.IndexOf("/CharacterTable.csv") != -1)
             {
                 TextAsset data = AssetDatabase.LoadAssetAtPath<TextAsset>(str);
                 string assetfile = str.Replace(".csv", ".asset");
-                TestDataRows gm = AssetDatabase.LoadAssetAtPath<TestDataRows>(assetfile);
+                CharacterTableRows gm = AssetDatabase.LoadAssetAtPath<CharacterTableRows>(assetfile);
                 if (gm == null)
                 {
-                    gm = new TestDataRows();
+                    gm = new CharacterTableRows();
                     AssetDatabase.CreateAsset(gm, assetfile);
                 }
 
-                gm.rows = CSVSerializer.Deserialize<TestDataRows.Row>(data.text);
+                gm.rows = CSVSerializer.Deserialize<CharacterTableRows.Row>(data.text);
 
                 EditorUtility.SetDirty(gm);
                 AssetDatabase.SaveAssets();
-#if DEBUG_LOG || UNITY_EDITOR
-                Debug.Log("Reimported Asset: " + str);
-#endif
             }
         }
     }

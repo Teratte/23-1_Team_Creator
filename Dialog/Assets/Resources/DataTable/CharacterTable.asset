@@ -10,18 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 85fa464fd02ac497c91b62ead4173782, type: 3}
-  m_Name: TestDataTable
+  m_Name: CharacterTable
   m_EditorClassIdentifier: 
   rows:
   - id: 1
-    name: ' John'
-    age: 20
-  - id: 2
-    name: ' Mary'
-    age: 11
-  - id: 3
-    name: ' Peter'
-    age: 42
-  - id: 4
-    name: ' Yvonne'
-    age: 55
+    name: Bono
+    characterimage: {fileID: 21300000, guid: 56b3b0eb62e6f4fa293cbdd124338c79, type: 3}
+  - id: 1
+    name: OnoB
+    characterimage: {fileID: 21300000, guid: 9ab24c66e26cb44de8a80f10f7c50919, type: 3}

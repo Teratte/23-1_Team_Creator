@@ -1,15 +1,13 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tester : MonoBehaviour
+public class Branch : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
     {
-        CharacterTableRows.Row a = DataTableManager.Instance().GetTestData(1);
-        Debug.Log(a.name);
+        
     }
 
     // Update is called once per frame
