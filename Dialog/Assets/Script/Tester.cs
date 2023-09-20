@@ -16,7 +16,7 @@ public class Tester : MonoBehaviour
         SentenceTableRows.Row b = DataTableManager.Instance().GetSentenceData(1); //문장데이터 받아오기
         Debug.Log(b.id);
         Debug.Log(b.characterid);
-        //이거 지움 ㅋㅋ
+        Debug.Log(b.sentence);
         //...
     }
 
