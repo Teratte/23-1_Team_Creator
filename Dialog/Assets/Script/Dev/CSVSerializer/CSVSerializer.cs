@@ -85,13 +85,34 @@ public class CSVSerializer
         {
             Type elementType = fieldinfo.FieldType.GetElementType();
             string[] elem = value.Split(',');
-            Array array_value = Array.CreateInstance(elementType, elem.Length);
+            Array array_value;
+            
+            if (elementType != typeof(BranchInfo))
+                array_value = Array.CreateInstance(elementType, elem.Length);
+            else
+                array_value = Array.CreateInstance(elementType, elem.Length/2);
+            
             for (int i = 0; i < elem.Length; i++)
             {
                 if (elementType == typeof(string))
-                    array_value.SetValue(elem[i], i);
+                {
+                    array_value.SetValue(elem[i], i);   
+                }
+                else if (elementType == typeof(BranchInfo))
+                {
+                    if (i % 2 == 0)
+                    {
+                        BranchInfo test = new BranchInfo();
+                        test.next_sentence_id = int.Parse(elem[i]);
+                        test.answer = elem[i+1];
+                        array_value.SetValue(test, i/2);
+                    }
+                    else continue;
+                }
                 else
-                    array_value.SetValue(Convert.ChangeType(elem[i], elementType), i);
+                {
+                    array_value.SetValue(Convert.ChangeType(elem[i], elementType), i);   
+                }
             }
             fieldinfo.SetValue(v, array_value);
         }
@@ -111,7 +132,9 @@ public class CSVSerializer
         }
 #endif
         else if (fieldinfo.FieldType == typeof(string))
-            fieldinfo.SetValue(v, value);
+        {
+            fieldinfo.SetValue(v, value);   
+        }
         else
             fieldinfo.SetValue(v, Convert.ChangeType(value, fieldinfo.FieldType));
     }

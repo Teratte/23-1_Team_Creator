@@ -22,16 +22,23 @@ public class DataTableManager
     }
     /***/
     
-    public Dictionary<int, CharacterTableRows.Row> CharacterTable;
+    private Dictionary<int, CharacterTableRows.Row> CharacterTable;
+    private Dictionary<int, SentenceTableRows.Row> SentenceTable;
     
     private void LoadAndBuildTable()
     {
-        CharacterTable = new FlexibleDictionary<int, CharacterTableRows.Row>();
-        CharacterTableRows table = Resources.Load("DataTable/CharacterTable", typeof(CharacterTableRows)) as CharacterTableRows;
-        foreach (var row in table.rows)
+        CharacterTable = new Dictionary<int, CharacterTableRows.Row>();
+        CharacterTableRows characterTable = Resources.Load("DataTable/CharacterTable", typeof(CharacterTableRows)) as CharacterTableRows;
+        foreach (var row in characterTable.rows)
         {
-            Debug.Log(row.id);
             CharacterTable.Add(row.id, row);
+        }
+
+        SentenceTable = new Dictionary<int, SentenceTableRows.Row>();
+        SentenceTableRows sentenceTable = Resources.Load("DataTable/SentenceTable", typeof(SentenceTableRows)) as SentenceTableRows;
+        foreach (var row in sentenceTable.rows)
+        {
+            SentenceTable.Add(row.id, row);
         }
     }
     
@@ -46,18 +53,11 @@ public class DataTableManager
     
     public SentenceTableRows.Row GetSentenceData(int id)
     {
-        SentenceTableRows.Row tmpData = new SentenceTableRows.Row();
-        tmpData.id = id;
-        tmpData.characterid = 1;
-        tmpData.sentence = "이것은 임시 텍스트입니다. 입력된 ID는 " + id + "입니다.";
-        tmpData.branch = new BranchInfo[2];
-        tmpData.branch[0] = new BranchInfo();
-        tmpData.branch[0].answer = "ID 2번 호출";
-        tmpData.branch[0].next_sentence_id = 2;
-        tmpData.branch[1] = new BranchInfo();
-        tmpData.branch[1].answer = "ID 3번 호출";
-        tmpData.branch[1].next_sentence_id = 3;
-        return tmpData;
+        if (SentenceTable.ContainsKey(id))
+        {
+            return SentenceTable[id];
+        }
+        return null;
     }
 }
 
@@ -83,6 +83,23 @@ public class CSVImportPostprocessor : AssetPostprocessor
                 }
 
                 gm.rows = CSVSerializer.Deserialize<CharacterTableRows.Row>(data.text);
+
+                EditorUtility.SetDirty(gm);
+                AssetDatabase.SaveAssets();
+            }
+            
+            if (str.IndexOf("/SentenceTable.csv") != -1)
+            {
+                TextAsset data = AssetDatabase.LoadAssetAtPath<TextAsset>(str);
+                string assetfile = str.Replace(".csv", ".asset");
+                SentenceTableRows gm = AssetDatabase.LoadAssetAtPath<SentenceTableRows>(assetfile);
+                if (gm == null)
+                {
+                    gm = new SentenceTableRows();
+                    AssetDatabase.CreateAsset(gm, assetfile);
+                }
+
+                gm.rows = CSVSerializer.Deserialize<SentenceTableRows.Row>(data.text);
 
                 EditorUtility.SetDirty(gm);
                 AssetDatabase.SaveAssets();
