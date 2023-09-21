@@ -32,7 +32,41 @@ _e.g._
 |4|2|"헐? 포도를 선택했네?"|5,그런가 보다.|
 |5|3|"어쩌라는 걸까..."|-1,대화를 종료한다.|
 
-- ### 테이블 업데이트 방법
+### 테이블 업데이트 방법
     1. Resources/DataTable 폴더의 csv파일을 수정한다.
     2. 엔진에서 csv파일을 Reimport를 한다.
     3. Rows 객체가 업데이트 되었는지 확인한다.
+
+### 코드 예시
+DataTableManager라는 클래스를 통해 접근한다.
+Assets/Script/Tester.cs에 예시가 있다.
+```csharp
+CharacterTableRows.Row a = DataTableManager.Instance().GetCharacterData(1); //캐릭터 데이터 받아오기
+Debug.Log(a.id);
+Debug.Log(a.name);
+Debug.Log(a.characterimage);
+
+Debug.Log("===================================");
+
+SentenceTableRows.Row b = DataTableManager.Instance().GetSentenceData(1); //문장데이터 받아오기
+Debug.Log(b.id);
+Debug.Log(b.characterid);
+Debug.Log(b.sentence);
+for (int i = 0; i < b.branch.Length; i++)
+{
+    Debug.Log(b.branch[i].next_sentence_id);
+    Debug.Log(b.branch[i].answer);
+}
+
+Debug.Log("===================================");
+
+b = DataTableManager.Instance().GetSentenceData(2); //문장데이터 받아오기
+Debug.Log(b.id);
+Debug.Log(b.characterid);
+Debug.Log(b.sentence);
+for (int i = 0; i < b.branch.Length; i++)
+{
+    Debug.Log(b.branch[i].next_sentence_id);
+    Debug.Log(b.branch[i].answer);
+}
+``````
