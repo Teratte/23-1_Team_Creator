@@ -1,44 +1,42 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Dialog : MonoBehaviour
 {
-    public int currentDialogID;
+    private int currentDialogID; // 현재 대화 ID
     private DataTableManager dataTableManager;
-
+    int j = 0;
     private void Start()
     {
-        // DataTableManager초기화
+        // DataTableManager 초기화
         dataTableManager = DataTableManager.Instance();
+
+        // 대화 시작
+        ShowNextDialog();
     }
 
-    private void OnMouseDown()
+    private void Update()
     {
-        StartDialog(currentDialogID);
-        Debug.Log("실행 확인");
-    }
-    public void StartDialog(int dialogID)
-    {
-        // 대화 ID를 DataTableManager에서 데이터 가져오기
-        SentenceTableRows.Row dialogData = dataTableManager.GetSentenceData(dialogID);
-        if (dialogData != null)
+        // 클릭 시 다음 대화로 이동
+        if (Input.GetMouseButtonDown(0))
         {
-            // 대화를 화면에 표시
-            Debug.Log("캐릭터의 ID: " + dialogData.characterid);
-            Debug.Log("문장 출력: " + dialogData.sentence);
-
-            // 다음 대사 표시 및 선택지 표시
-            foreach (var branchInfo in dialogData.branch)
-            {
-                Debug.Log("다음 문장 ID: " + branchInfo.next_sentence_id);
-                Debug.Log("답: " + branchInfo.answer);
-            }
+            ShowNextDialog();
         }
-        else
+    }
+    // 다음 대화로 이동하고 출력하는 함수
+    private void ShowNextDialog()
+    {
+        j++;
+        SentenceTableRows.Row b = DataTableManager.Instance().GetSentenceData(j); //문장데이터 받아오기
+        Debug.Log("ID : "+b.id);
+        Debug.Log("캐릭터 : "+b.characterid);
+        Debug.Log("문장 : "+b.sentence);
+        for (int i = 0; i < b.branch.Length; i++)
         {
-            // 데이터 없으면 출력
-            Debug.LogWarning("대화 데이터 없음: " + dialogID);
+            Debug.Log("문장 : "+b.branch[i].next_sentence_id);
+            Debug.Log("답 : "+b.branch[i].answer);
         }
     }
 }
