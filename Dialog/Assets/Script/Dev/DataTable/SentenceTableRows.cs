@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class BranchInfo
+public class BranchInfo//다음 대사랑, ID저장
 {
     public int next_sentence_id;
     public string answer;

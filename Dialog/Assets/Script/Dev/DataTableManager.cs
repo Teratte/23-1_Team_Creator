@@ -40,6 +40,7 @@ public class DataTableManager
         {
             SentenceTable.Add(row.id, row);
         }
+        Debug.Log("실행 확인절차");
     }
     
     public CharacterTableRows.Row GetCharacterData(int id)
