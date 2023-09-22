@@ -7,7 +7,6 @@ public class Dialog : MonoBehaviour
 {
     private int currentDialogID; // 현재 대화 ID
     private DataTableManager dataTableManager;
-    int j = 0;
     private void Start()
     {
         // DataTableManager 초기화
@@ -28,8 +27,8 @@ public class Dialog : MonoBehaviour
     // 다음 대화로 이동하고 출력하는 함수
     private void ShowNextDialog()
     {
-        j++;
-        SentenceTableRows.Row b = DataTableManager.Instance().GetSentenceData(j); //문장데이터 받아오기
+        currentDialogID++;//ID의 값을 1씩 증가시켜 다음 문장으로 전환
+        SentenceTableRows.Row b = DataTableManager.Instance().GetSentenceData(currentDialogID); //문장데이터 받아오기
         Debug.Log("ID : "+b.id);
         Debug.Log("캐릭터 : "+b.characterid);
         Debug.Log("문장 : "+b.sentence);
