@@ -36,6 +36,11 @@ public class Tester : MonoBehaviour
             Debug.Log(b.branch[i].next_sentence_id);
             Debug.Log(b.branch[i].answer);
         }
+
+        Debug.Log("<===================================>");
+        
+        Dialog tmpDialog = new Dialog();
+        tmpDialog.StartDialog(2);
     }
 
     // Update is called once per frame

@@ -5,37 +5,35 @@ using UnityEngine;
 
 public class Dialog : MonoBehaviour
 {
-    private int currentDialogID; // «ˆ¿Á ¥Î»≠ ID
-    private DataTableManager dataTableManager;
-    private void Start()
-    {
-        // DataTableManager √ ±‚»≠
-        dataTableManager = DataTableManager.Instance();
+    private int currentDialogID = -1;
 
-        // ¥Î»≠ Ω√¿€
-        ShowNextDialog();
+    private void DrawDialog()
+    {
+        if (currentDialogID == -1)
+        {
+            Debug.LogWarning("Should Initialize currentDialogID");
+            return;
+        }
+        
+        SentenceTableRows.Row Data = DataTableManager.Instance().GetSentenceData(currentDialogID);
+        Debug.Log("ID : "+Data.id);
+        Debug.Log("Ï∫êÎ¶≠ÌÑ∞ : "+Data.characterid);
+        Debug.Log("Î¨∏Ïû• : "+Data.sentence);
+        for (int i = 0; i < Data.branch.Length; i++)
+        {
+            Debug.Log("Îã§ÏùåÎ¨∏Ïû•ID : "+Data.branch[i].next_sentence_id);
+            Debug.Log("ÎåÄÎãµ : "+Data.branch[i].answer);
+        }
+        //TODO: Ïó¨Í∏∞ÏÑú UIÎ•º Í∑∏Î†§Ï§ÄÎã§.
+    }
+    public void StartDialog(int SentenceId)
+    {
+        currentDialogID = SentenceId; //TODO: ÎÑ§Ïù¥Î∞ç ÌÜµÏùºÌïòÎ©¥ Ï¢ãÏùÑÎìØ.
+        DrawDialog();
     }
 
-    private void Update()
+    public void Next(int BranchIndex)
     {
-        // ≈¨∏Ø Ω√ ¥Ÿ¿Ω ¥Î»≠∑Œ ¿Ãµø
-        if (Input.GetMouseButtonDown(0))
-        {
-            ShowNextDialog();
-        }
-    }
-    // ¥Ÿ¿Ω ¥Î»≠∑Œ ¿Ãµø«œ∞Ì √‚∑¬«œ¥¬ «‘ºˆ
-    private void ShowNextDialog()
-    {
-        currentDialogID++;//ID¿« ∞™¿ª 1æø ¡ı∞°Ω√ƒ— ¥Ÿ¿Ω πÆ¿Â¿∏∑Œ ¿¸»Ø
-        SentenceTableRows.Row b = DataTableManager.Instance().GetSentenceData(currentDialogID); //πÆ¿Âµ•¿Ã≈Õ πﬁæ∆ø¿±‚
-        Debug.Log("ID : "+b.id);
-        Debug.Log("ƒ≥∏Ø≈Õ : "+b.characterid);
-        Debug.Log("πÆ¿Â : "+b.sentence);
-        for (int i = 0; i < b.branch.Length; i++)
-        {
-            Debug.Log("πÆ¿Â : "+b.branch[i].next_sentence_id);
-            Debug.Log("¥‰ : "+b.branch[i].answer);
-        }
+        //Ïù¥ Ìï®Ïàò ÏóÜÏù¥ Í∑∏ÎÉ• next_sentence_idÎ°ú StartDialog Î∂àÎü¨Ï§òÎèÑ Îê† ÎìØ?
     }
 }
