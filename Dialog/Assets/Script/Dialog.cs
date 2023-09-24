@@ -53,6 +53,11 @@ public class Dialog : MonoBehaviour
             LocalPos.y = i * 100;
             rt.SetLocalPositionAndRotation(LocalPos, Quaternion.identity);
             branchButtons.Add(NewButton);
+
+            Debug.Log("다음문장ID : " + Data.branch[i].next_sentence_id);
+            Debug.Log("대답 : " + Data.branch[i].answer);
+            Debug.Log("다음문장ID : " + Data.branch[i].next_sentence_id);
+            Debug.Log("대답 : " + Data.branch[i].answer);
         }
     }
 
