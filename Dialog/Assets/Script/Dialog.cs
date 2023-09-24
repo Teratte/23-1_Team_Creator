@@ -32,7 +32,7 @@ public class Dialog : MonoBehaviour
         TXT_CharacterName.text = CharData.name;
         TXT_Sentence.text = Data.sentence;
         IMG_CharacterImage.sprite = CharData.characterimage;
-
+        
         for (int i = 0; i < branchButtons.Count; i++)
         {
             //이전에 사용하던 분기 버튼 제거
@@ -55,6 +55,7 @@ public class Dialog : MonoBehaviour
 
     public void Start()
     {
+        branchButtons = new List<GameObject>();
         StartDialog(2);
     }
 
