@@ -28,7 +28,6 @@ public class Dialog : MonoBehaviour
         //TODO: 여기서 UI를 그려준다.
 
 
-
     }
     public void StartDialog(int SentenceId)
     {
@@ -36,8 +35,8 @@ public class Dialog : MonoBehaviour
         DrawDialog();
     }
 
-    public void Next(int BranchIndex)
+    /*public void Next(int BranchIndex)
     {
         //이 함수 없이 그냥 next_sentence_id로 StartDialog 불러줘도 될 듯?
-    }
+    }*/
 }
