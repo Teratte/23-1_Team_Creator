@@ -9,10 +9,11 @@ public class Dialog : MonoBehaviour
 {
     private int currentDialogID = -1;
 
-    bool check_mouse = false;
+    // bool check_mouse = false;
 
-    public Text chat;
-    public Text char_name;
+    public Text Chat;
+    public Text Char_name;
+    public Image Char_Image;
 
     private void DrawDialog()
     {
@@ -21,11 +22,13 @@ public class Dialog : MonoBehaviour
             Debug.LogWarning("Should Initialize currentDialogID");
             return;
         }
-        
+
         SentenceTableRows.Row Data = DataTableManager.Instance().GetSentenceData(currentDialogID);
+        CharacterTableRows.Row CharData = DataTableManager.Instance().GetCharacterData(Data.characterid);
+       
         Debug.Log("ID : "+Data.id);
-        Debug.Log("캐릭터 : "+Data.characterid); //캐릭터 csv id
-        Debug.Log("문장 : "+Data.sentence); // 문장
+        Debug.Log("캐릭터 : "+Data.characterid);          // 캐릭터 csv id
+        Debug.Log("문장 : "+Data.sentence);               // 문장
 
 
         for (int i = 0; i < Data.branch.Length; i++)
@@ -44,8 +47,9 @@ public class Dialog : MonoBehaviour
          }*/
         //TODO: 여기서 UI를 그려준다
 
-        chat.text = Data.sentence; // 문장 출력용 텍스트 레거시
-        //char_name.text = Data.characterid;
+        Chat.text = Data.sentence;                          // 문장 출력용 텍스트 레거시
+        Char_name.text = CharData.name;                     // 캐릭터 이름 출력용 레거시
+        Char_Image.sprite = CharData.characterimage;        // 캐릭터 이미지
     }
 
     public void Start()
