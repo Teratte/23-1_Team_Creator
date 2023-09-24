@@ -15,12 +15,6 @@ public class Dialog : MonoBehaviour
 
     public GameObject BranchRoot;
     public GameObject BranchButton;
-    
-    bool check_mouse = false;
-
-    public Text Chat;
-    public Text Char_name;
-    public Image Char_Image;
 
     private void DrawDialog()
     {
@@ -35,7 +29,7 @@ public class Dialog : MonoBehaviour
 
         TXT_CharacterName.text = CharData.name;
         TXT_Sentence.text = Data.sentence;
-        //IMG_CharacterImage.sprite = CharData.characterimage;
+        IMG_CharacterImage.sprite = CharData.characterimage;
         
         for (int i = 0; i < Data.branch.Length; i++)
         {
