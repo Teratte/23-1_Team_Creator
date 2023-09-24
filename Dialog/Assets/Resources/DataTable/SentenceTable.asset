@@ -41,7 +41,7 @@ MonoBehaviour:
     - next_sentence_id: 5
       answer: "\uADF8\uB7F0\uAC00 \uBCF4\uB2E4."
   - id: 5
-    characterid: 3
+    characterid: 1
     sentence: "\uC5B4\uCA4C\uB77C\uB294 \uAC78\uAE4C..."
     branch:
     - next_sentence_id: -1

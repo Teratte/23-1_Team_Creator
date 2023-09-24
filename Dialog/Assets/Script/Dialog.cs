@@ -46,6 +46,9 @@ public class Dialog : MonoBehaviour
             var rt = NewButton.GetComponent<RectTransform>();
             var ButtonText = NewButton.GetComponentInChildren<Text>();
             ButtonText.text = Data.branch[i].answer;
+            int nextSenID = Data.branch[i].next_sentence_id;
+            var button = NewButton.GetComponent<Button>();
+            button.onClick.AddListener(delegate { StartDialog(nextSenID);});
             Vector3 LocalPos = Vector3.zero;
             LocalPos.y = i * 100;
             rt.SetLocalPositionAndRotation(LocalPos, Quaternion.identity);
@@ -56,7 +59,7 @@ public class Dialog : MonoBehaviour
     public void Start()
     {
         branchButtons = new List<GameObject>();
-        StartDialog(2);
+        StartDialog(1);
     }
 
    /*public void Update()
@@ -74,7 +77,12 @@ public class Dialog : MonoBehaviour
     public void StartDialog(int SentenceId)
     {
         currentDialogID = SentenceId; //TODO: 네이밍 통일하면 좋을듯.
-        DrawDialog();
+        if(currentDialogID != -1)
+            DrawDialog();
+        else
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     /*public void Next(int BranchIndex)
