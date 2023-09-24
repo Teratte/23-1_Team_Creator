@@ -16,6 +16,8 @@ public class Dialog : MonoBehaviour
     public GameObject BranchRoot;
     public GameObject BranchButton;
 
+    private List<GameObject> branchButtons;
+    
     private void DrawDialog()
     {
         if (currentDialogID == -1)
@@ -30,7 +32,14 @@ public class Dialog : MonoBehaviour
         TXT_CharacterName.text = CharData.name;
         TXT_Sentence.text = Data.sentence;
         IMG_CharacterImage.sprite = CharData.characterimage;
-        
+
+        for (int i = 0; i < branchButtons.Count; i++)
+        {
+            //이전에 사용하던 분기 버튼 제거
+            Destroy(branchButtons[i]);
+        }
+        branchButtons.Clear();
+
         for (int i = 0; i < Data.branch.Length; i++)
         {
             var NewButton =Instantiate(BranchButton, BranchRoot.transform);
@@ -40,6 +49,7 @@ public class Dialog : MonoBehaviour
             Vector3 LocalPos = Vector3.zero;
             LocalPos.y = i * 100;
             rt.SetLocalPositionAndRotation(LocalPos, Quaternion.identity);
+            branchButtons.Add(NewButton);
         }
     }
 
