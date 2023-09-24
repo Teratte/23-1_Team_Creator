@@ -9,6 +9,13 @@ public class Dialog : MonoBehaviour
 {
     private int currentDialogID = -1;
 
+    public Text TXT_CharacterName;
+    public Text TXT_Sentence;
+    public Image IMG_CharacterImage;
+
+    public GameObject BranchRoot;
+    public GameObject BranchButton;
+    
     bool check_mouse = false;
 
     public Text chat;
@@ -23,34 +30,27 @@ public class Dialog : MonoBehaviour
         }
         
         SentenceTableRows.Row Data = DataTableManager.Instance().GetSentenceData(currentDialogID);
-        Debug.Log("ID : "+Data.id);
-        Debug.Log("캐릭터 : "+Data.characterid); //캐릭터 csv id
-        Debug.Log("문장 : "+Data.sentence); // 문장
+        CharacterTableRows.Row CharData = DataTableManager.Instance().GetCharacterData(Data.characterid);
 
-
+        TXT_CharacterName.text = CharData.name;
+        TXT_Sentence.text = Data.sentence;
+        //IMG_CharacterImage.sprite = CharData.characterimage;
+        
         for (int i = 0; i < Data.branch.Length; i++)
         {
-            Debug.Log("다음문장ID : " + Data.branch[i].next_sentence_id);
-            Debug.Log("대답 : " + Data.branch[i].answer);
+            var NewButton =Instantiate(BranchButton, BranchRoot.transform);
+            var rt = NewButton.GetComponent<RectTransform>();
+            var ButtonText = NewButton.GetComponentInChildren<Text>();
+            ButtonText.text = Data.branch[i].answer;
+            Vector3 LocalPos = Vector3.zero;
+            LocalPos.y = i * 100;
+            rt.SetLocalPositionAndRotation(LocalPos, Quaternion.identity);
         }
-
-        /* if (check_mouse == true) // 마우스 좌 클릭시 다음문장 실행
-         {
-             for (int i = 0; i < Data.branch.Length; i++)
-             {
-                 Debug.Log("다음문장ID : " + Data.branch[i].next_sentence_id);
-                 Debug.Log("대답 : " + Data.branch[i].answer);
-             }
-         }*/
-        //TODO: 여기서 UI를 그려준다
-
-        chat.text = Data.sentence; // 문장 출력용 텍스트 레거시
-        //char_name.text = Data.characterid;
     }
 
     public void Start()
     {
-        StartDialog(1);
+        StartDialog(2);
     }
 
    /*public void Update()
