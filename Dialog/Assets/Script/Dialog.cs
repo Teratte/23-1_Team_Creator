@@ -18,8 +18,9 @@ public class Dialog : MonoBehaviour
     
     bool check_mouse = false;
 
-    public Text chat;
-    public Text char_name;
+    public Text Chat;
+    public Text Char_name;
+    public Image Char_Image;
 
     private void DrawDialog()
     {
@@ -28,7 +29,7 @@ public class Dialog : MonoBehaviour
             Debug.LogWarning("Should Initialize currentDialogID");
             return;
         }
-        
+
         SentenceTableRows.Row Data = DataTableManager.Instance().GetSentenceData(currentDialogID);
         CharacterTableRows.Row CharData = DataTableManager.Instance().GetCharacterData(Data.characterid);
 
