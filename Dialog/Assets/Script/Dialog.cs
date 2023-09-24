@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Dialog : MonoBehaviour
@@ -17,14 +18,17 @@ public class Dialog : MonoBehaviour
         
         SentenceTableRows.Row Data = DataTableManager.Instance().GetSentenceData(currentDialogID);
         Debug.Log("ID : "+Data.id);
-        Debug.Log("캐릭터 : "+Data.characterid);
-        Debug.Log("문장 : "+Data.sentence);
+        Debug.Log("캐릭터 : "+Data.characterid); //캐릭터 csv id
+        Debug.Log("문장 : "+Data.sentence); // 문장
         for (int i = 0; i < Data.branch.Length; i++)
         {
             Debug.Log("다음문장ID : "+Data.branch[i].next_sentence_id);
             Debug.Log("대답 : "+Data.branch[i].answer);
         }
         //TODO: 여기서 UI를 그려준다.
+
+
+
     }
     public void StartDialog(int SentenceId)
     {
