@@ -7,10 +7,17 @@ public class EX_FSM_01 : MonoBehaviour
     private delegate void StateDelegate(Event _event);
 
     private State currentState;
-    
+ 
+    public float Speed = 3.0f;
+    public float patrolRange = 1.0f;
+    private bool Forward = true;
+
+    private Rigidbody2D Rgby;
+
     private Dictionary<State, StateDelegate> stateMap;
     void Start()
     {
+        Rgby = GetComponent<Rigidbody2D>();
         InitializeFSM();
         ChangeState(State.Idle);
         StartCoroutine(UpdateState()); //Update안에 넣어도 되는데, 너무 자주 불리면 예제 로그 보기 어려워서 따로 만듦
@@ -96,6 +103,18 @@ public class EX_FSM_01 : MonoBehaviour
             case Event.Update:
             {
                 Debug.Log("State_Patrol의 Update!");
+                float moveDirection = Forward ? 1.0f : -1.0f;
+
+                Rgby.velocity = new Vector2(Rgby.velocity.x, moveDirection * Speed);
+
+                if (transform.position.y >= patrolRange)
+                {
+                    Forward = false;
+                }
+                else if (transform.position.y <= -patrolRange)
+                {
+                    Forward = true;
+                }
                 break;
             }
             case Event.Exit:
