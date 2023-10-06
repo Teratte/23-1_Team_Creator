@@ -28,6 +28,9 @@ public class EX_FSM_01 : MonoBehaviour
         stateMap = new Dictionary<State, StateDelegate>();
         stateMap.Add(State.Idle, new StateDelegate(State_Idle));
         stateMap.Add(State.Patrol, new StateDelegate(State_Patrol));
+        stateMap.Add(State.Chase, new StateDelegate(State_Chase));
+        stateMap.Add(State.Attack, new StateDelegate(State_Attack));
+        stateMap.Add(State.Death, new StateDelegate(State_Death));
     }
 
     IEnumerator UpdateState()
@@ -100,6 +103,69 @@ public class EX_FSM_01 : MonoBehaviour
                 Debug.Log("State_Patrol의 Exit!");
                 break;
             }
+        }
+    }
+    void State_Chase(Event _event)
+    {
+        switch (_event)
+        {
+            case Event.Enter:
+                {
+                    Debug.Log("State_Chase의 Enter!");
+                    break;
+                }
+            case Event.Update:
+                {
+                    Debug.Log("State_Chase의 Update!");
+                    break;
+                }
+            case Event.Exit:
+                {
+                    Debug.Log("State_Chase의 Exits!");
+                    break;
+                }
+        }
+    }
+    void State_Attack(Event _event)
+    {
+        switch (_event)
+        {
+            case Event.Enter:
+                {
+                    Debug.Log("State_Attack의 Enter!");
+                    break;
+                }
+            case Event.Update:
+                {
+                    Debug.Log("State_Attack의 Update!");
+                    break;
+                }
+            case Event.Exit:
+                {
+                    Debug.Log("State_Attack의 Exits!");
+                    break;
+                }
+        }
+    }
+    void State_Death(Event _event)
+    {
+        switch (_event)
+        {
+            case Event.Enter:
+                {
+                    Debug.Log("State_Death의 Enter!");
+                    break;
+                }
+            case Event.Update:
+                {
+                    Debug.Log("State_Death의 Update!");
+                    break;
+                }
+            case Event.Exit:
+                {
+                    Debug.Log("State_Death의 Exits!");
+                    break;
+                }
         }
     }
 }

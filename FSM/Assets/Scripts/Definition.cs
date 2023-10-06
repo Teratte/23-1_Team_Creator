@@ -7,6 +7,7 @@ public enum State
     None,
     Idle,
     Patrol,
+    Chase,
     Attack,
     Death
 }
