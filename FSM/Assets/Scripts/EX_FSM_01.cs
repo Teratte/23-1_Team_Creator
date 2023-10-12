@@ -8,13 +8,17 @@ public class EX_FSM_01 : MonoBehaviour
 
     private State currentState;
  
-    public float Speed = 3.0f;
+    public float Speed = 2.0f;
     public float patrolRange = 1.0f;
     private bool Forward = true;
 
     private Rigidbody2D Rgby;
 
     private Dictionary<State, StateDelegate> stateMap;
+    //해야될 것:플레이어 감지 하는 것, 공격 사정거리
+    //해결해야 될 것:이동을 한뒤 
+    //궁금점:Event에서 해야되는 역할은 무엇인가?
+    
     void Start()
     {
         Rgby = GetComponent<Rigidbody2D>();
@@ -75,16 +79,19 @@ public class EX_FSM_01 : MonoBehaviour
             case Event.Enter:
             {
                 Debug.Log("State_Idle의 Enter!");
-                break;   
+                break;
             }
             case Event.Update:
             {
                 Debug.Log("State_Idle의 Update!");
-                break;   
+                //딜레이 주기
+                break;
             }
             case Event.Exit:
             {
                 Debug.Log("State_Idle의 Exits!");
+                //플레이어 찾는것 완성하면 조건문 사용해 Chase로 넘어가는 거 까지
+                ChangeState(State_Patrol);
                 break;   
             }
         }
@@ -110,16 +117,20 @@ public class EX_FSM_01 : MonoBehaviour
                 if (transform.position.y >= patrolRange)
                 {
                     Forward = false;
+                    break;
                 }
                 else if (transform.position.y <= -patrolRange)
                 {
                     Forward = true;
+                    break;
                 }
                 break;
             }
             case Event.Exit:
             {
                 Debug.Log("State_Patrol의 Exit!");
+                //플레이어 찾는것 완성하면 조건문 사용해 Chase로 넘어가는 거 까지
+                ChangeState(State_Idle);
                 break;
             }
         }
@@ -141,6 +152,7 @@ public class EX_FSM_01 : MonoBehaviour
             case Event.Exit:
                 {
                     Debug.Log("State_Chase의 Exits!");
+                    ChangeState(State_Attack);
                     break;
                 }
         }
